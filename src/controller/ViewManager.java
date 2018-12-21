@@ -86,4 +86,17 @@ public class ViewManager {
 			e.printStackTrace();
 		}
 	}
+
+	public void logout() {
+		boolean x = db.closeAccount(account);
+		if (x) {
+			ViewManager ViewManager = new ViewManager(views);
+			ViewManager.switchTo("Loginview");
+
+		}
+		else {
+			System.out.println("Error");
+		}
+		
+	}
 }

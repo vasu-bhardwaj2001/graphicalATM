@@ -1,10 +1,12 @@
 package view;
 
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.ViewManager;
@@ -13,7 +15,7 @@ import controller.ViewManager;
 public class HomeView extends JPanel implements ActionListener {
 	
 	private ViewManager manager;		// manages interactions between the views, model, and database
-	
+	private JButton logoutButton;	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
 	 * 
@@ -35,13 +37,12 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	private void initialize() {
 		
-		// TODO
-		//
-		// this is a placeholder for this view and should be removed once you start
-		// building the HomeView.
-		
+		JPanel log = new JPanel(new CardLayout());
+		ViewManager manager = new ViewManager(log);
+		initLogoutButton();
+		 
 		this.add(new javax.swing.JLabel("HomeView", javax.swing.SwingConstants.CENTER));
-		
+		  
 		// TODO
 		//
 		// this is where you should build the HomeView (i.e., all the components that
@@ -61,6 +62,13 @@ public class HomeView extends JPanel implements ActionListener {
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		throw new IOException("ERROR: The HomeView class is not serializable.");
 	}
+	private void initLogoutButton() {	
+		logoutButton = new JButton("Login");
+		logoutButton.setBounds(205, 180, 200, 35);
+		logoutButton.addActionListener(this);
+		
+		this.add(logoutButton);
+	}
 	
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
 	
@@ -72,7 +80,11 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
 		
+		if (source.equals(logoutButton)) {
+			manager.logout();
+		} 
 		// TODO
 		//
 		// this is where you'll setup your action listener, which is responsible for
