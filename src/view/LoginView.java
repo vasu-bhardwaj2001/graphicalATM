@@ -153,7 +153,7 @@ public class LoginView extends JPanel implements ActionListener {
 	 * Initializes the components needed for the power button.
 	 */
 	
-	private void initPowerButton() {
+	void initPowerButton() {
 		powerButton = new JButton();
 		powerButton.setBounds(5, 5, 50, 50);
 		powerButton.addActionListener(this);

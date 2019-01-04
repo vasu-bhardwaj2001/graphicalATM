@@ -91,7 +91,7 @@ public class ViewManager {
 		boolean x = db.closeAccount(account);
 		if (x) {
 			ViewManager ViewManager = new ViewManager(views);
-			ViewManager.switchTo("Loginview");
+			ViewManager.switchTo(ATM.LOGIN_VIEW);
 
 		}
 		else {

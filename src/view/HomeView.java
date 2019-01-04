@@ -1,11 +1,15 @@
 package view;
 
 import java.awt.CardLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -16,6 +20,7 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	private JButton logoutButton;	
+	private JButton powerButton;
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
 	 * 
@@ -36,7 +41,9 @@ public class HomeView extends JPanel implements ActionListener {
 	 */
 	
 	private void initialize() {
+		this.setLayout(null);
 		
+		initPowerButton();
 		JPanel log = new JPanel(new CardLayout());
 		ViewManager manager = new ViewManager(log);
 		initLogoutButton();
@@ -63,13 +70,28 @@ public class HomeView extends JPanel implements ActionListener {
 		throw new IOException("ERROR: The HomeView class is not serializable.");
 	}
 	private void initLogoutButton() {	
-		logoutButton = new JButton("Login");
-		logoutButton.setBounds(205, 180, 200, 35);
+		logoutButton = new JButton("Logout");
+		logoutButton.setBounds(105, 180, 100, 35);
 		logoutButton.addActionListener(this);
 		
 		this.add(logoutButton);
 	}
 	
+	
+	private void initPowerButton() {
+		powerButton = new JButton();
+		powerButton.setBounds(5, 5, 50, 50);
+		powerButton.addActionListener(this);
+		
+		try {
+			Image image = ImageIO.read(new File("images/power-off.png"));
+			powerButton.setIcon(new ImageIcon(image));
+		} catch (Exception e) {
+			powerButton.setText("OFF");
+		}
+		
+		this.add(powerButton);
+	}
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
 	
 	/*

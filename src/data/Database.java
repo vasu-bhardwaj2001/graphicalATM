@@ -34,6 +34,7 @@ public class Database {
 	private Statement stmt;				// the statement used to build inserts, updates and selects
 	private ResultSet rs;				// result set used for selects
 	private DatabaseMetaData meta;		// metadata about the database
+	//private AccountNumber accountNum;
 	
 	/**
 	 * Constructs an instance (or object) of the Database class.
@@ -75,6 +76,22 @@ public class Database {
 		}
 		
 		return null;
+	}
+	
+	public long highacct() {
+		long accountnum = 100000000;
+		try {
+			stmt = conn.createStatement();
+			PreparedStatement select = conn.prepareStatement("SELECT MAX(account_number) FROM accounts");
+			rs = select.executeQuery();
+			System.out.println(rs);
+			if(rs.next()) {
+				return rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return accountnum;
 	}
 	
 	/**
