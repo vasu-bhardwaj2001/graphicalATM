@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import data.Database;
 import model.BankAccount;
 import view.ATM;
+import view.DepositView;
+import view.HomeView;
 import view.LoginView;
 
 public class ViewManager {
@@ -47,9 +49,15 @@ public class ViewManager {
 			lv.updateErrorMessage("Invalid account number and/or PIN.");
 		} else {
 			switchTo(ATM.HOME_VIEW);
+			HomeView hv = ((HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX]);
+			hv.setCurrentAccount(account);
 			
 			LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
 			lv.updateErrorMessage("");
+			
+			DepositView dv = ((DepositView) views.getComponents()[ATM.DEPOSIT_VIEW_INDEX]);
+			dv.setCurrentAccount(account);
+			dv.updateErrorMessage("");
 		}
 	}
 	

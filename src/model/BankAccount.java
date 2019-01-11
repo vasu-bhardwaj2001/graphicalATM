@@ -188,4 +188,16 @@ public class BankAccount {
 	public String toString() {
 		return "{ Account No.: " + accountNumber + ", Balance: " + getFormattedBalance() + " }";	// modify as needed
 	}
+
+	public double addBalance(int value) {
+		balance += value;
+		return balance;
+		
+	}
+
+	public double removeBalance(int value) {
+		balance -= value;
+		return balance;
+		
+	}
 }

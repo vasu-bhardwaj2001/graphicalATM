@@ -11,9 +11,12 @@ import java.io.ObjectOutputStream;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.ViewManager;
+import data.Database;
+import model.BankAccount;
 
 @SuppressWarnings("serial")
 public class HomeView extends JPanel implements ActionListener {
@@ -21,6 +24,10 @@ public class HomeView extends JPanel implements ActionListener {
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	private JButton logoutButton;	
 	private JButton powerButton;
+	private JButton deposit;
+	private JButton withdraw;
+	private JButton transfer;
+	private BankAccount Account = null;
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
 	 * 
@@ -31,7 +38,6 @@ public class HomeView extends JPanel implements ActionListener {
 		super();
 		
 		this.manager = manager;
-		initialize();
 	}
 	
 	///////////////////// PRIVATE METHODS /////////////////////////////////////////////
@@ -42,12 +48,36 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	private void initialize() {
 		this.setLayout(null);
-		
 		initPowerButton();
 		JPanel log = new JPanel(new CardLayout());
 		ViewManager manager = new ViewManager(log);
 		initLogoutButton();
-		 
+		JLabel info = new JLabel ("Your name is " + Account.getUser().getFirstName() + ' ' + Account.getUser().getLastName() + "."); 
+		info.setBounds(200, 0, 300, 10);
+		JLabel accountnum = new JLabel("Your Account Number is " + Account.getAccountNumber() + ".");
+		accountnum.setBounds(200, 15, 300, 10);
+		JLabel balance = new JLabel("Your Current Balance is " + Account.getBalance() + ".");
+		balance.setBounds(200, 30, 300, 10);
+		
+		deposit = new JButton ("Deposit Money");
+		deposit.setBounds(100, 150, 100, 50);
+		deposit.addActionListener(this);
+		
+		withdraw = new JButton ("Deposit Money");
+		withdraw.setBounds(100, 150, 100, 50);
+		withdraw.addActionListener(this);
+		
+		transfer = new JButton ("Deposit Money");
+		transfer.setBounds(100, 150, 100, 50);
+		transfer.addActionListener(this);
+		
+		
+		this.add(deposit);
+		this.add(withdraw);
+		this.add(transfer);
+		this.add(info); 
+		this.add(accountnum); 
+		this.add(balance); 
 		this.add(new javax.swing.JLabel("HomeView", javax.swing.SwingConstants.CENTER));
 		  
 		// TODO
@@ -71,7 +101,7 @@ public class HomeView extends JPanel implements ActionListener {
 	}
 	private void initLogoutButton() {	
 		logoutButton = new JButton("Logout");
-		logoutButton.setBounds(105, 180, 100, 35);
+		logoutButton.setBounds(200, 400, 100, 35);
 		logoutButton.addActionListener(this);
 		
 		this.add(logoutButton);
@@ -102,12 +132,28 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		Object source = e.getSource();
 		
 		if (source.equals(logoutButton)) {
 			manager.logout();
 		} 
-		// TODO
+		if (source.equals(powerButton)) {
+			manager.shutdown();
+		}
+		if (source.equals(deposit)) {
+			
+			manager.switchTo(ATM.DEPOSIT_VIEW);
+		}
+		if (source.equals(withdraw)) {
+			
+			manager.switchTo(ATM.WITHDRAW_VIEW);
+		}
+		if (source.equals(transfer)) {
+			
+			manager.switchTo(ATM.TRANSFER_VIEW);
+		}
+		// d
 		//
 		// this is where you'll setup your action listener, which is responsible for
 		// responding to actions the user might take in this view (an action can be a
@@ -115,4 +161,21 @@ public class HomeView extends JPanel implements ActionListener {
 		//
 		// feel free to use my action listener in LoginView.java as an example.
 	}
-}
+
+
+	public void setCurrentAccount(BankAccount Account) {
+		this.Account = Account;
+		initialize();
+		
+		JPanel views = new JPanel(new CardLayout());
+		ViewManager manager = new ViewManager(views);
+		
+		// add child views to the parent container
+
+		views.add(new DepositView(manager), ATM.DEPOSIT_VIEW);
+		//views.add(new WithdrawView(manager));
+		//views.add(new TransferView(manager));
+
+		
+	}
+	}
