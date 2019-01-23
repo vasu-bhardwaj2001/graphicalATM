@@ -28,9 +28,12 @@ public class transferView extends JPanel implements ActionListener {
 	private JButton cancelButton;
 	private JButton powerButton;			// button that powers off the ATM
 	private JTextField inputfield;
+	private JTextField inputfield2;
 	private JTextField valueField;
-	private JLabel errorMessageLabel;		// label for potential error messages
+	private JLabel errorMessageLabel;
+	private Database db;
 	public BankAccount Account = null;
+	public BankAccount Account2 = null;
 	
 	public transferView(ViewManager manager) {
 		super();
@@ -61,6 +64,9 @@ public class transferView extends JPanel implements ActionListener {
 		inputfield = new JTextField();
 		inputfield.setBounds(100, 150, 200, 50);
 		
+		inputfield2 = new JTextField();
+		inputfield2.setBounds(100, 250, 200, 50);
+		
 		valueField = new JTextField();
 		valueField.setBounds(300, 150, 200, 50);
 		this.add(info); 
@@ -77,7 +83,7 @@ public class transferView extends JPanel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Database Database = new Database();
+		HomeView HomeView = new HomeView(manager); 
 		Object source = e.getSource();
 		
 		if (source.equals(cancelButton)) {
@@ -87,8 +93,10 @@ public class transferView extends JPanel implements ActionListener {
 			manager.shutdown();
 		}
 		if (source.equals(submitButton)) {
-			int add = Integer.parseInt(inputfield.getText());
-			Account.removeBalance(add);
+			int swap = Integer.parseInt(inputfield.getText());
+			Account2 = db.getAccount(Integer.parseInt(inputfield2.getText()));
+			Account2.addBalance(swap);
+			HomeView.initUserinfo();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 

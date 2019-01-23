@@ -92,7 +92,7 @@ public class Database {
 			e.printStackTrace();
 		}
 		return accountnum;
-	}
+	}	
 	
 	/**
 	 * Retrieves an existing account by account number.
@@ -144,7 +144,7 @@ public class Database {
 			insertStmt.setString(11, account.getUser().getZip());
 			insertStmt.setString(12, String.valueOf(account.getStatus()));
 			
-			insertStmt.executeUpdate();
+			insertStmt.executeUpdate();	
 			insertStmt.close();
 			
 			return true;
@@ -160,7 +160,7 @@ public class Database {
 	 * 
 	 * @param account
 	 * @return true if the transaction is successful; false otherwise.
-	 */
+	 */  
 	
 	public boolean closeAccount(BankAccount account) {
 		try {
@@ -201,7 +201,7 @@ public class Database {
 					"balance = ?, " +
 					"phone = ?, " +
 					"street_address = ?, " +
-					"city = ?, " +
+					"city = ?, " + 
 					"state = ?, " +
 					"zip = ? " +
 				"WHERE account_number = ?"
@@ -223,7 +223,7 @@ public class Database {
 			e.printStackTrace();
 		}
 		
-		return false;
+		return true;
 	}
 	
 	/**

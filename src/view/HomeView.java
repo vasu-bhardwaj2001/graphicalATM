@@ -27,7 +27,12 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton deposit;
 	private JButton withdraw;
 	private JButton transfer;
-	private BankAccount Account = null;
+	private JButton information;
+	private JLabel info;
+	private JLabel accountnum;
+	public JLabel balance;
+	public JLabel balance2;
+	public BankAccount Account = null;
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
 	 * 
@@ -52,32 +57,38 @@ public class HomeView extends JPanel implements ActionListener {
 		JPanel log = new JPanel(new CardLayout());
 		ViewManager manager = new ViewManager(log);
 		initLogoutButton();
-		JLabel info = new JLabel ("Your name is " + Account.getUser().getFirstName() + ' ' + Account.getUser().getLastName() + "."); 
+		//initUserinfo();
+		info = new JLabel ("Your name is " + Account.getUser().getFirstName() + ' ' + Account.getUser().getLastName() + "."); 
 		info.setBounds(200, 0, 300, 10);
-		JLabel accountnum = new JLabel("Your Account Number is " + Account.getAccountNumber() + ".");
+		accountnum = new JLabel("Your Account Number is " + Account.getAccountNumber() + ".");
 		accountnum.setBounds(200, 15, 300, 10);
-		JLabel balance = new JLabel("Your Current Balance is " + Account.getBalance() + ".");
+		this.add(info); 
+		this.add(accountnum); 
+		balance = new JLabel("Your Current Balance is " + Account.getBalance() + ".");
 		balance.setBounds(200, 30, 300, 10);
+		this.add(balance); 
 		
 		deposit = new JButton ("Deposit Money");
-		deposit.setBounds(100, 150, 100, 50);
+		deposit.setBounds(100, 150, 150, 50);
 		deposit.addActionListener(this);
 		
-		withdraw = new JButton ("Deposit Money");
-		withdraw.setBounds(100, 150, 100, 50);
+		withdraw = new JButton ("Withdraw Money");
+		withdraw.setBounds(100, 250, 150, 50);
 		withdraw.addActionListener(this);
 		
-		transfer = new JButton ("Deposit Money");
-		transfer.setBounds(100, 150, 100, 50);
+		transfer = new JButton ("Transfer Money");
+		transfer.setBounds(300, 150, 150, 50);
 		transfer.addActionListener(this);
+		
+		information = new JButton ("User Info");
+		information.setBounds(300, 250, 150, 50);
+		information.addActionListener(this);
 		
 		
 		this.add(deposit);
 		this.add(withdraw);
 		this.add(transfer);
-		this.add(info); 
-		this.add(accountnum); 
-		this.add(balance); 
+		this.add(information);
 		this.add(new javax.swing.JLabel("HomeView", javax.swing.SwingConstants.CENTER));
 		  
 		// TODO
@@ -89,6 +100,22 @@ public class HomeView extends JPanel implements ActionListener {
 		// positioning your components.
 	}
 	
+	public void initUserinfo() {
+		//DepositView DepositView = new DepositView(manager);
+		balance.setText(null);
+		balance2 = new JLabel("Your Current Balance is " + Account.getBalance() + ".");
+		balance2.setBounds(200, 30, 300, 10);
+		this.add(balance2);
+		
+		
+	}
+	
+	public void clearUserInfo() {
+		balance = new JLabel("");
+		balance.setBounds(200, 30, 300, 10);
+		this.add(balance); 
+	}
+
 	/*
 	 * HomeView is not designed to be serialized, and attempts to serialize will throw an IOException.
 	 * 
@@ -142,16 +169,20 @@ public class HomeView extends JPanel implements ActionListener {
 			manager.shutdown();
 		}
 		if (source.equals(deposit)) {
-			
+			clearUserInfo();
 			manager.switchTo(ATM.DEPOSIT_VIEW);
 		}
 		if (source.equals(withdraw)) {
-			
+			clearUserInfo();
 			manager.switchTo(ATM.WITHDRAW_VIEW);
 		}
 		if (source.equals(transfer)) {
-			
+			clearUserInfo();
 			manager.switchTo(ATM.TRANSFER_VIEW);
+		}
+		if (source.equals(information)) {
+			clearUserInfo();
+			manager.switchTo(ATM.INFORMATION_VIEW);
 		}
 		// d
 		//

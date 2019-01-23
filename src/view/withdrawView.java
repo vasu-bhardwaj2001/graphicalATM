@@ -73,7 +73,7 @@ public class withdrawView extends JPanel implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Database Database = new Database();
+		HomeView HomeView = new HomeView(manager); 
 		Object source = e.getSource();
 		
 		if (source.equals(cancelButton)) {
@@ -85,6 +85,8 @@ public class withdrawView extends JPanel implements ActionListener {
 		if (source.equals(submitButton)) {
 			int add = Integer.parseInt(inputfield.getText());
 			Account.removeBalance(add);
+			HomeView.setCurrentAccount(Account);
+			HomeView.Account.addBalance(add);
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 

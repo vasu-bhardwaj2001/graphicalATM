@@ -29,7 +29,7 @@ public class DepositView extends JPanel implements ActionListener {
 	private JButton powerButton;			// button that powers off the ATM
 	private JTextField inputfield;
 	private JLabel errorMessageLabel;		// label for potential error messages
-	private BankAccount Account = null;
+	public BankAccount Account2 = null;
 	
 	public DepositView(ViewManager manager) {
 		super();
@@ -40,12 +40,13 @@ public class DepositView extends JPanel implements ActionListener {
 	private void initialize() {
 		this.setLayout(null);
 		JPanel log = new JPanel(new CardLayout());
-		JLabel info = new JLabel ("Your name is " + Account.getUser().getFirstName() + ' ' + Account.getUser().getLastName() + "."); 
+		JLabel info = new JLabel ("Your name is " + Account2.getUser().getFirstName() + ' ' + Account2.getUser().getLastName() + "."); 
 		info.setBounds(200, 0, 300, 10);
-		JLabel accountnum = new JLabel("Your Account Number is " + Account.getAccountNumber() + ".");
+		JLabel accountnum = new JLabel("Your Account Number is " + Account2.getAccountNumber() + ".");
 		accountnum.setBounds(200, 15, 300, 10);
-		JLabel balance = new JLabel("Your Current Balance is " + Account.getBalance() + ".");
+		JLabel balance = new JLabel("Your Current Balance is " + Account2.getBalance() + ".");
 		balance.setBounds(200, 30, 300, 10);
+		
 		submitButton = new JButton("SUBMIT");
 		submitButton.setBounds(100, 300, 100, 50);
 		submitButton.addActionListener(this);
@@ -71,27 +72,32 @@ public class DepositView extends JPanel implements ActionListener {
 	public void updateErrorMessage(String errorMessage) {
 		errorMessageLabel.setText(errorMessage);
 	}
+	@SuppressWarnings("unused")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Database Database = new Database();
+		HomeView HomeView = new HomeView(manager); 
 		Object source = e.getSource();
 		
 		if (source.equals(cancelButton)) {
 			inputfield.setText(null);
+			manager.switchTo(ATM.HOME_VIEW);
 		} 
 		if (source.equals(powerButton)) {
 			manager.shutdown();
 		}
 		if (source.equals(submitButton)) {
 			int add = Integer.parseInt(inputfield.getText());
-			Account.addBalance(add);
+			Account2.addBalance(add);
+			Database database = new Database();
+			database.updateAccount(Account2);
+			database.updateAccount(HomeView.Account);
 			manager.switchTo(ATM.HOME_VIEW);
 		}
 
 		
 	}
 	public void setCurrentAccount(BankAccount Account) {
-		this.Account = Account;
+		this.Account2 = Account;
 		initialize();
 		
 		JPanel views = new JPanel(new CardLayout());

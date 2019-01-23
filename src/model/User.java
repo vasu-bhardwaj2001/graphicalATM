@@ -253,8 +253,8 @@ public class User {
 	
 	public String getFormattedDob() {
 		int year = Integer.parseInt(String.valueOf(dob).substring(0, 4));
-		int month = Integer.parseInt(String.valueOf(dob).substring(4, 6));
-		int day = Integer.parseInt(String.valueOf(dob).substring(6, 8));
+		int month = Integer.parseInt(String.valueOf(dob).substring(4,5));
+		int day = Integer.parseInt(String.valueOf(dob).substring(5, 7));
 		
 		return getMonth(month) + " " + day + ", " + year;
 	}

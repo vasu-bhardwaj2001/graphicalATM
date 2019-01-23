@@ -10,8 +10,12 @@ import data.Database;
 import model.BankAccount;
 import view.ATM;
 import view.DepositView;
+import view.EditView;
 import view.HomeView;
+import view.InformationView;
 import view.LoginView;
+import view.transferView;
+import view.withdrawView;
 
 public class ViewManager {
 	
@@ -58,6 +62,26 @@ public class ViewManager {
 			DepositView dv = ((DepositView) views.getComponents()[ATM.DEPOSIT_VIEW_INDEX]);
 			dv.setCurrentAccount(account);
 			dv.updateErrorMessage("");
+			
+			withdrawView wv = ((withdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX]);
+			wv.setCurrentAccount(account);
+			wv.updateErrorMessage("");
+			
+			transferView tv = ((transferView) views.getComponents()[ATM.TRANSFER_VIEW_INDEX]);
+			tv.setCurrentAccount(account);
+			tv.updateErrorMessage("");
+			
+			InformationView iv = ((InformationView) views.getComponents()[ATM.INFORMATION_VIEW_INDEX]);
+			iv.setCurrentAccount(account);
+			iv.updateErrorMessage("");
+			
+			EditView eiv = ((EditView) views.getComponents()[ATM.EDIT_VIEW_INDEX]);
+			eiv.setCurrentAccount(account);
+			eiv.updateErrorMessage("");
+			
+			//withdrawView wv = ((withdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX]);
+			//wv.setCurrentAccount(account);
+			//wv.updateErrorMessage("");
 		}
 	}
 	
